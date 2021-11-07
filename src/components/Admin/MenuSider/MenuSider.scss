@@ -5,5 +5,23 @@
   left: 0;
   top: 65px;
   height: 100vh;
+  width: 210px;
   overflow: auto;
+  background: $background-dark-sider;
+  .title__web {
+    color: white;
+    padding: 20px;
+    font-size: 16px;
+    font-style: italic;
+  }
+  ul {
+    li {
+      &.ant-menu-item {
+        margin: 0;
+        svg {
+          font-size: 19px;
+        }
+      }
+    }
+  }
 }

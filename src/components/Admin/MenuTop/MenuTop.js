@@ -1,17 +1,49 @@
 import React from "react";
 import { Button } from "antd";
 import MenuUnfoldOutlined from '@ant-design/icons/MenuUnfoldOutlined';
-import PoweroffOutlined from '@ant-design/icons/PoweroffOutlined';
+import LogoutOutlined from '@ant-design/icons/LogoutOutlined';
 import MenuFoldOutlined from '@ant-design/icons/MenuFoldOutlined';
 //import { MenuUnfoldOutlined, PoweroffOutlined, MenuFoldOutlined } from "@ant-design/icons";
 import RevolverLogo from "../../../assets/img/png/revolver.png";
 
+import { logout } from  "../../../api/auth";
+
 import "./MenuTop.scss";
 
-function MenuTop(props) {
-    console.log(props);
-    const { menuCollapsed, setMenuCollapsed } = props;
-    return (
+export default function MenuTop(props) {
+    
+  const { menuCollapsed, setMenuCollapsed } = props;
+
+  // return (
+  //     <div className="menu-top">
+  //         <div className="menu-top__left">
+  //             <img className="menu-top__left-logo" src={Cllansola} alt="Fusito"/>
+  //             <Button type="link" onClick={() => setMenuCollapsed(!menuCollapsed)}>
+  //             <MenuFoldOutlined />
+  //             </Button>
+  //         </div>
+  //         <div className="menu-top__right">
+  //         <Button type="link" onClick={ () => console.log("asdas") }>
+  //         <LogoutOutlined />
+  //             </Button>
+  //         </div>
+  //     </div>
+  // )
+
+  function IconOpenSideBar() {
+      
+      if (menuCollapsed) {
+          return <MenuUnfoldOutlined />;
+      }
+      return <MenuFoldOutlined />;
+    }
+
+    const logoutUser = () => {
+      logout();
+      window.location.reload();
+    };
+
+  return (
       <div className="menu-top">
         <div className="menu-top__left">
           <img
@@ -19,17 +51,18 @@ function MenuTop(props) {
             src={RevolverLogo}
             alt="RevolverLogo"
           />
-          <Button type="link" onClick={() => setMenuCollapsed(!menuCollapsed)}/>
-          {menuCollapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-          <Button/>
+          <Button type="link" onClick={() => {setMenuCollapsed(!menuCollapsed);}}>
+          {IconOpenSideBar()}
+          </Button>
         </div>
         <div className="menu-top__right">
-        <Button type="link" onClick={() => console.log("Desconexion")}/>
-          <PoweroffOutlined /> 
-          <Button/>
+          {/* <Button type="link">
+            <LogoutOutlined />
+          </Button> */}
+          <Button type="link" onClick={logoutUser}>
+          <LogoutOutlined />
+          </Button>
         </div>
       </div>
     );
-  }
-  
-  export default MenuTop;
+}

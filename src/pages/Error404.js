@@ -1,9 +1,12 @@
-import React from "react";
+import React from 'react';
 
-export default function Error404(){
+import "./Error404.scss"
+
+export default function Error404 () {
     return(
         <div>
-            <h2>Error 404...</h2>
+            <h1>La página que estás buscando no existe</h1>
+            <h2 className="Error-404">Error 404</h2>
         </div>
-    );
-} 
+    )
+}

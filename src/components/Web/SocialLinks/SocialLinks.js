@@ -10,7 +10,7 @@ export default function SocialLinks() {
   return (
     <div className="social-links">
       <a
-        href="https://www.youtube.com/"
+        href="https://www.youtube.com/channel/UCgo7BGFHS-780o85dqN8UAg"
         className="youtube"
         target="_blank"
         rel="noopener noreferrer"
@@ -18,7 +18,7 @@ export default function SocialLinks() {
         <YouTubeIcon />
       </a>
       <a
-        href="https://twitter.com/"
+        href="https://twitter.com/quesadillapop"
         className="twitter"
         target="_blank"
         rel="noopener noreferrer"
@@ -26,7 +26,7 @@ export default function SocialLinks() {
         <TwitterIcon />
       </a>
       <a
-        href="https://www.facebook.com/"
+        href="https://www.facebook.com/quesadillapodcast"
         className="facebook"
         target="_blank"
         rel="noopener noreferrer"
@@ -34,7 +34,7 @@ export default function SocialLinks() {
         <FacebookIcon />
       </a>
       <a
-        href="https://es.linkedin.com/"
+        href="https://www.instagram.com/quesadillapodcast/"
         className="linkedin"
         target="_blank"
         rel="noopener noreferrer"

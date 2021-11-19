@@ -1,14 +1,18 @@
-.form-add {
-  text-align: center;
-  .ant-form-item {
-    margin-top: 5px;
-    margin-bottom: 5px;
+.add-user-form {
+  .form-add {
+    text-align: center;
 
-    i {
+    .ant-form-item {
+      margin-top: 5px;
+      margin-bottom: 5px;
+
+      i {
+        color: rgba(0, 0, 0, 0.25);
+      }
+    }
+
+    .btn-submit {
+      width: 100%;
     }
   }
-}
-.add-user__btn-submit {
-  margin-top: 15px;
-  width: 100%;
 }

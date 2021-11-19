@@ -1,12 +1,18 @@
-import React from 'react'
-import AcademyLogo from '../../../../assets/img/png/academy-logo.png';
+import React from "react";
+import AcademyLogo from "../../../../assets/img/png/academy-logo.png";
+
 import "./PresentationCourses.scss";
+
 export default function PresentationCourses() {
-    return (
-        <div className="presentation-courses">
-            <img src={AcademyLogo} alt="Cursos Udemy" />
-            <p>Id quis aliquip proident quis ut id ipsum occaecat in nostrud ad id. Esse amet aliquip aliquip est ullamco excepteur enim nostrud adipisicing incididunt consectetur. Consectetur nisi sint velit tempor magna aliquip esse reprehenderit. Duis enim laboris quis minim aliqua dolor consectetur. Aliqua veniam magna consectetur incididunt aliqua est commodo in est aliqua amet. Non mollit deserunt esse duis eu nisi. Aliquip non ut anim proident.</p>
-            <p>Ea minim velit in velit exercitation esse ex enim.</p>
-        </div>
-    )
+  return (
+    <div className="presentation-courses">
+      <img src={AcademyLogo} alt="Transforma tu negocio" />
+      <p>
+      Debido a la declaración del brote de COVID-19 como pandemia, la mayoría de las empresas y negocios de todo tipo se han visto 
+afectadas por el cese de actividades o la reducción de estas mismas. Provocando que todos los negocios, organismos e instituciones de 
+todo tipo se vieran en la obligación de transformarse y adaptarse de manera imprevista a la ya creciente era digital. Es por ello que, a 
+consecuencia del actual estado de emergencia sanitaria el interés por las Plataformas Digitales y los Marketplace se disparó en un 
+500%. </p>
+    </div>
+  );
 }

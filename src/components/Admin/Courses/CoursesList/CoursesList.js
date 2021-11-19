@@ -1,14 +1,14 @@
-import React , { useState, useEffect} from 'react';
-import { List, Button, Modal as ModalAntd, notification } from "antd";
-//import { BookOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
-//import BookOutlined  from '@ant-design/icons/BookOutlined'; IS NOT DEFINED, SEARCH AND FIX IT
-import EditOutlined  from '@ant-design/icons/EditOutlined';
-import DeleteOutlined  from '@ant-design/icons/DeleteOutlined';
-import DragSortableList from 'react-drag-sortable';
+import React, { useState, useEffect } from "react";
+import { List, Button, Icon, Modal as ModalAntd, notification } from "antd";
+import DragSortableList from "react-drag-sortable";
 import Modal from "../../../Modal";
-import AddEditCourseForm  from "../AddEditCourseForm";
-import { getCourseDataUdemyApi, deleteCourseApi, updateCourseApi  } from "../../../../api/course";
+import AddEditCourseForm from "../AddEditCourseForm";
 import { getAccessTokenApi } from "../../../../api/auth";
+import {
+  getCourseDataUdemyApi,
+  deleteCourseApi,
+  updateCourseApi
+} from "../../../../api/course";
 
 import "./CoursesList.scss";
 
@@ -113,7 +113,6 @@ export default function CoursesList(props) {
             No tienes cursos creados
           </h2>
         )}
-        {/* <div items={listCourses}></div> */}
         <DragSortableList items={listCourses} onSort={onSort} type="vertical" />
       </div>
 
@@ -133,22 +132,14 @@ function Course(props) {
   const [courseData, setCourseData] = useState(null);
 
   useEffect(() => {
-    let unmounted = false;
-    getCourseDataUdemyApi(course.idCourse).then(response => {      
+    getCourseDataUdemyApi(course.idCourse).then(response => {
       if (response.code !== 200) {
         notification["warning"]({
           message: `El curso con el id ${course.idCourse} no se ha encontrado.`
         });
-      }else if(!unmounted) {
-        setCourseData(response.data);
       }
-      });
-      
-    return () => {
-      unmounted = true;
-      
-    }
-    
+      setCourseData(response.data);
+    });
   }, [course]);
 
   if (!courseData) {
@@ -159,10 +150,10 @@ function Course(props) {
     <List.Item
       actions={[
         <Button type="primary" onClick={() => editCourseModal(course)}>
-          <EditOutlined/>
+          <Icon type="edit" />
         </Button>,
         <Button type="danger" onClick={() => deleteCourse(course)}>
-          <DeleteOutlined />
+          <Icon type="delete" />
         </Button>
       ]}
     >
@@ -172,7 +163,7 @@ function Course(props) {
         style={{ width: "100px", marginRight: "20px" }}
       />
       <List.Item.Meta
-        title={`${courseData.title} | ID: ${course.idCourse} | ${course.coupon} `}
+        title={`${courseData.title} | ID: ${course.idCourse}`}
         description={courseData.headline}
       />
     </List.Item>

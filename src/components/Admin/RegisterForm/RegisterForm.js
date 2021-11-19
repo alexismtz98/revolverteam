@@ -1,10 +1,5 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Checkbox, notification } from "antd";
-//import {SmileOutlined, MailOutlined, UserOutlined,LockOutlined } from '@ant-design/icons';
-import SmileOutlined from '@ant-design/icons/SmileOutlined';
-import MailOutlined from '@ant-design/icons/MailOutlined';
-import UserOutlined from '@ant-design/icons/UserOutlined';
-import LockOutlined from '@ant-design/icons/LockOutlined';
+import { Form, Icon, Input, Button, Checkbox, notification } from "antd";
 import {
   emailValidation,
   minLengthValidation
@@ -15,16 +10,12 @@ import "./RegisterForm.scss";
 
 export default function RegisterForm() {
   const [inputs, setInputs] = useState({
-    name: "",
-    lastname: "",
     email: "",
     password: "",
     repeatPassword: "",
     privacyPolicy: false
   });
   const [formValid, setFormValid] = useState({
-    name: false,
-    lastname: false,
     email: false,
     password: false,
     repeatPassword: false,
@@ -47,9 +38,7 @@ export default function RegisterForm() {
 
   const inputValidation = e => {
     const { type, name } = e.target;
-    if (type === "text") {
-        setFormValid({ ...formValid, [name]: minLengthValidation(e.target, 3) });
-    }
+
     if (type === "email") {
       setFormValid({ ...formValid, [name]: emailValidation(e.target) });
     }
@@ -63,15 +52,13 @@ export default function RegisterForm() {
 
   const register = async e => {
     e.preventDefault();
- 
-    const nombreVal = inputs.name;
-    const lastnameVal = inputs.lastname;
+
     const emailVal = inputs.email;
     const passwordVal = inputs.password;
     const repeatPasswordVal = inputs.repeatPassword;
     const privacyPolicyVal = inputs.privacyPolicy;
-    // console.log(inputs);
-    if ( !nombreVal || !lastnameVal|| !emailVal || !passwordVal || !repeatPasswordVal || !privacyPolicyVal) {
+
+    if (!emailVal || !passwordVal || !repeatPasswordVal || !privacyPolicyVal) {
       notification["error"]({
         message: "Todos los campos son obligatorios"
       });
@@ -82,14 +69,13 @@ export default function RegisterForm() {
         });
       } else {
         const result = await signUpApi(inputs);
-        if (!result.ok) {          
+        if (!result.ok) {
           notification["error"]({
             message: result.message
           });
         } else {
           notification["success"]({
-            message: result.message,
-            icon: <SmileOutlined style={{ color: '#108ee9' }} />
+            message: result.message
           });
           resetForm();
         }
@@ -106,8 +92,6 @@ export default function RegisterForm() {
     }
 
     setInputs({
-      name: "",
-      lastname: "",
       email: "",
       password: "",
       repeatPassword: "",
@@ -115,8 +99,6 @@ export default function RegisterForm() {
     });
 
     setFormValid({
-      name: false,
-      lastname: false,
       email: false,
       password: false,
       repeatPassword: false,
@@ -125,35 +107,13 @@ export default function RegisterForm() {
   };
 
   return (
-    <Form className="register-form" onSubmitCapture={register} onChange={changeForm}>
+    <Form className="register-form" onSubmit={register} onChange={changeForm}>
       <Form.Item>
         <Input
-          prefix={<UserOutlined />}
-          type="text"
-          name="name"
-          placeholder="Nombre usuario"
-          className="register-form__input"
-          onChange={inputValidation}
-          value={inputs.name}
-        />
-      </Form.Item>
-      <Form.Item>
-        <Input
-          prefix={<UserOutlined />}
-          type="text"
-          name="lastname"
-          placeholder="Apellidos"
-          className="register-form__input"
-          onChange={inputValidation}
-          value={inputs.lastname}
-        />
-      </Form.Item>
-      <Form.Item>
-        <Input
-          prefix={<MailOutlined />}
+          prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
           type="email"
           name="email"
-          placeholder="Correo electrónico"
+          placeholder="Correo electronico"
           className="register-form__input"
           onChange={inputValidation}
           value={inputs.email}
@@ -161,7 +121,7 @@ export default function RegisterForm() {
       </Form.Item>
       <Form.Item>
         <Input
-          prefix={<LockOutlined />}
+          prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
           type="password"
           name="password"
           placeholder="Contraseña"
@@ -172,7 +132,7 @@ export default function RegisterForm() {
       </Form.Item>
       <Form.Item>
         <Input
-          prefix={<LockOutlined />}
+          prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
           type="password"
           name="repeatPassword"
           placeholder="Repetir contraseña"

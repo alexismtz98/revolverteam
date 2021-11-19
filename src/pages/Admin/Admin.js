@@ -1,13 +1,9 @@
-// import React from 'react';
-// import { Redirect, Route } from "react-router-dom";
-// import Users from "../../pages/Admin/Users/Users";
+import React from "react";
 
 export default function Admin() {
-    return (
-        // <>
-        // <Route path="/admin" component={Users} />
-        // <Redirect to="/admin/users" />
-        // </>
-        "admin"
-    );
+  return (
+    <div>
+      <h1>Estamos en Admin</h1>
+    </div>
+  );
 }

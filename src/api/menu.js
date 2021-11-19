@@ -1,9 +1,9 @@
-import {API_VERSION, BASE_PATH} from "./config"; 
+import { basePath, apiVersion } from "./config";
 
 export function getMenuApi() {
-    const url = `${BASE_PATH}/${API_VERSION}/get-menus/asc`;
+  const url = `${basePath}/${apiVersion}/get-menus`;
 
-    return fetch(url)
+  return fetch(url)
     .then(response => {
       return response.json();
     })
@@ -16,9 +16,9 @@ export function getMenuApi() {
 }
 
 export function updateMenuApi(token, menuId, data) {
-    const url = `${BASE_PATH}/${API_VERSION}/update-menu/${menuId}`;
+  const url = `${basePath}/${apiVersion}/update-menu/${menuId}`;
 
-    const params = {
+  const params = {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -37,60 +37,58 @@ export function updateMenuApi(token, menuId, data) {
     .catch(err => {
       return err;
     });
-
 }
 
 export function activateMenuApi(token, menuId, status) {
-    
-    const url = `${BASE_PATH}/${API_VERSION}/activate-menu/${menuId}`;
-    const params = {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token
-        },
-        body: JSON.stringify({ active: status })
-      };
-    
-      return fetch(url, params)
-        .then(response => {
-          return response.json();
-        })
-        .then(result => {
-          return result.message;
-        })
-        .catch(err => {
-          return err;
-        });
+  const url = `${basePath}/${apiVersion}/activate-menu/${menuId}`;
 
+  const params = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token
+    },
+    body: JSON.stringify({ active: status })
+  };
+
+  return fetch(url, params)
+    .then(response => {
+      return response.json();
+    })
+    .then(result => {
+      return result.message;
+    })
+    .catch(err => {
+      console.log(err);
+    });
 }
 
 export function addMenuApi(token, menu) {
-    const url = `${BASE_PATH}/${API_VERSION}/add-menu/`;
-    const params = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token
-        },
-        body: JSON.stringify(menu)
-      };
-    
-      return fetch(url, params)
-        .then(response => {
-          return response.json();
-        })
-        .then(result => {
-          return result.message;
-        })
-        .catch(err => {
-          return err;
-        });
+  const url = `${basePath}/${apiVersion}/add-menu`;
+
+  const params = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token
+    },
+    body: JSON.stringify(menu)
+  };
+
+  return fetch(url, params)
+    .then(response => {
+      return response.json();
+    })
+    .then(result => {
+      return result.message;
+    })
+    .catch(err => {
+      console.log(err);
+    });
 }
 
 export function deleteMenuApi(token, menuId) {
-
-  const url = `${BASE_PATH}/${API_VERSION}/delete-menu/${menuId}`;
+  const url = `${basePath}/${apiVersion}/delete-menu/${menuId}`;
 
   const params = {
     method: "DELETE",
@@ -108,6 +106,6 @@ export function deleteMenuApi(token, menuId) {
       return result.message;
     })
     .catch(err => {
-      return err.message;
+      console.log(err);
     });
 }

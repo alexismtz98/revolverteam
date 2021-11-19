@@ -1,4 +1,2 @@
-export const BASE_PATH = "http://localhost:3977/api";
-export const API_VERSION = "V2";
-
-// http://localhost:3977/api/V2/ ORIGINAL
+export const basePath = "https://revolverserver.herokuapp.com/api";
+export const apiVersion = "v1";

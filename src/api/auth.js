@@ -1,4 +1,4 @@
-import { BASE_PATH, API_VERSION } from "./config";
+import { basePath, apiVersion } from "./config";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../utils/constants";
 import jwtDecode from "jwt-decode";
 
@@ -9,22 +9,21 @@ export function getAccessTokenApi() {
     return null;
   }
 
-  return willExpireToken(accessToken) ? getRefreshTokenApi() : accessToken;
+  return willExpireToken(accessToken) ? null : accessToken;
 }
 
 export function getRefreshTokenApi() {
   const refreshToken = localStorage.getItem(REFRESH_TOKEN);
 
   if (!refreshToken || refreshToken === "null") {
-    logout();
     return null;
   }
-  
-  return willExpireToken(refreshToken) ? refreshAccessTokenApi(refreshToken) : refreshToken;
+
+  return willExpireToken(refreshToken) ? null : refreshToken;
 }
 
 export function refreshAccessTokenApi(refreshToken) {
-  const url = `${BASE_PATH}/${API_VERSION}/refresh-access-token`;
+  const url = `${basePath}/${apiVersion}/refresh-access-token`;
   const bodyObj = {
     refreshToken: refreshToken
   };
@@ -45,8 +44,6 @@ export function refreshAccessTokenApi(refreshToken) {
     })
     .then(result => {
       if (!result) {
-        localStorage.removeItem(ACCESS_TOKEN);
-        localStorage.removeItem(REFRESH_TOKEN);
         logout();
       } else {
         const { accessToken, refreshToken } = result;
@@ -66,6 +63,5 @@ function willExpireToken(token) {
   const metaToken = jwtDecode(token);
   const { exp } = metaToken;
   const now = (Date.now() + seconds) / 1000;
-  
   return now > exp;
 }

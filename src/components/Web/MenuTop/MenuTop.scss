@@ -14,15 +14,18 @@
     a {
       color: #fff !important;
       font-weight: bold;
+
       &:hover {
         color: $primary-color !important;
       }
     }
   }
+
   &__logo {
     padding: 10px;
+
     img {
-      width: 150px;
+      width: 200px;
     }
   }
 }

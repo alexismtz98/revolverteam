@@ -1,233 +1,165 @@
-import React, { useState,useEffect } from "react";
-import { Form, Input, Select, Button, Row, Col, notification} from "antd";
-//import { LockOutlined, UserOutlined, MailOutlined} from '@ant-design/icons';
-import LockOutlined from '@ant-design/icons/LockOutlined';
-import UserOutlined from '@ant-design/icons/UserOutlined';
-import MailOutlined from '@ant-design/icons/MailOutlined';
-import { signUpAdminApi } from "../../../../api/user"
-import { getAccessTokenApi } from "../../../../api/auth"
+import React, { useState } from "react";
 import {
-    minLengthValidation, emailValidation
-  } from "../../../../utils/formValidation";
+  Form,
+  Icon,
+  Input,
+  Select,
+  Button,
+  Row,
+  Col,
+  notification
+} from "antd";
+import { signUpAdminApi } from "../../../../api/user";
+import { getAccessTokenApi } from "../../../../api/auth";
+
 import "./AddUserForm.scss";
 
-export default function AddUserForm(props) {
-    const  { setIsVisibleModal, setReloadUsers} = props;
-    const [userData, setUserData] = useState({});
-    const [inputs, setInputs] = useState({
-        name: "",
-        lastname: "",
-        email: "",
-        password: "",
-        role: ""
+export default function EditUserForm(props) {
+  const { setIsVisibleModal, setReloadUsers } = props;
+  const [userData, setUserData] = useState({});
+
+  const addUser = event => {
+    event.preventDefault();
+
+    if (
+      !userData.name ||
+      !userData.lastname ||
+      !userData.role ||
+      !userData.email ||
+      !userData.password ||
+      !userData.repeatPassword
+    ) {
+      notification["error"]({
+        message: "Todos los campos son obligatorios."
       });
-      const [formValid, setFormValid] = useState({
-        name: false,
-        lastname: false,
-        email: false,
-        password: false,
-        repeatPassword: false,
-        role: false
+    } else if (userData.password !== userData.repeatPassword) {
+      notification["error"]({
+        message: "Las contraseñas tienen que ser iguale."
       });
-      useEffect(() => {
-        setUserData({
-          name: inputs.name,
-          lastname: inputs.lastname,
-          email: inputs.email,
-          password: inputs.role,
-          role: inputs.avatar,
-        });
-      }, [inputs]);
-      const changeForm = e => {
-        if (e.target.name === "privacyPolicy") {
-          setInputs({
-            ...inputs,
-            [e.target.name]: e.target.checked
+    } else {
+      const accesToken = getAccessTokenApi();
+
+      signUpAdminApi(accesToken, userData)
+        .then(response => {
+          notification["success"]({
+            message: response
           });
-        } else {
-          setInputs({
-            ...inputs,
-            [e.target.name]: e.target.value
-          });
-        }
-      };
-    
-      const inputValidation = e => {
-        const { type, name } = e.target;
-        if (type === "text") {
-            setFormValid({ ...formValid, [name]: minLengthValidation(e.target, 3) });
-        }
-        if (type === "email") {
-          setFormValid({ ...formValid, [name]: emailValidation(e.target) });
-        }
-        if (type === "password") {
-          setFormValid({ ...formValid, [name]: minLengthValidation(e.target, 6) });
-        }
-        if (type === "checkbox") {
-          setFormValid({ ...formValid, [name]: e.target.checked });
-        }
-      };
-    
-      const register = e => {
-        e.preventDefault();
-        
-        const nombreVal = inputs.name;
-        const lastnameVal = inputs.lastname;
-        const emailVal = inputs.email;
-        const passwordVal = inputs.password;
-        const repeatPasswordVal = inputs.repeatPassword;
-        const role = inputs.role;
-        
-        // console.log(inputs);
-        if ( !nombreVal || !lastnameVal|| !emailVal || !passwordVal || !repeatPasswordVal || !role) {
-            console.log(inputs);
-            
+          setIsVisibleModal(false);
+          setReloadUsers(true);
+          setUserData({});
+        })
+        .catch(err => {
           notification["error"]({
-            message: "Todos los campos son obligatorios"
+            message: err
           });
-        } else {
-          if (passwordVal !== repeatPasswordVal) {
-            notification["error"]({
-              message: "Las contraseñas tienen que ser iguales."
-            });
-          } else {
-            const accessToken = getAccessTokenApi();
-            
-            console.log(inputs);
-            signUpAdminApi(accessToken, inputs)
-                .then( response => {
-                    notification["success"]({
-                        message: response
-                    });
-                    setIsVisibleModal(false);
-                    setReloadUsers(true);
-                    resetForm();
-                    setUserData({});
-                })
-                .catch(err => {
-                    notification["error"]({
-                        message: err
-                    });
-                })
-          }
-        }
-      };
-    
-      const resetForm = () => {
-        const inputs = document.getElementsByTagName("input");
-    
-        for (let i = 0; i < inputs.length; i++) {
-          inputs[i].classList.remove("success");
-          inputs[i].classList.remove("error");
-        }
-    
-        setInputs({
-          name: "",
-          lastname: "",
-          email: "",
-          password: "",
-          repeatPassword: ""
         });
-    
-        setFormValid({
-          name: false,
-          lastname: false,
-          email: false,
-          password: false,
-          repeatPassword: false
-        });
-      };
-      const { Option } = Select;
-      return (
-        <Form className="form-add" onSubmitCapture={register} onChange={changeForm}>
-            <Row gutter={24}>
-                <Col span={12}>
-                    <Form.Item>
-                        <Input
-                        prefix={<UserOutlined />}
-                        type="text"
-                        name="name"
-                        placeholder="Nombre usuario"
-                        onChange={inputValidation}
-                        value={inputs.name}
-                        />
-                    </Form.Item>
-                </Col>
-            <Col span={12}>
-                <Form.Item>
-                    <Input
-                        prefix={<UserOutlined />}
-                        type="text"
-                        name="lastname"
-                        placeholder="Apellidos"
-                        onChange={inputValidation}
-                        value={inputs.lastname}
-                    />
-                </Form.Item>
-            </Col>
-            </Row>
-            <Row gutter={24}>
-                <Col span={12}>
-                    <Form.Item>
-                      <Input
-                        prefix={<MailOutlined />}
-                        type="email"
-                        name="email"
-                        placeholder="Correo electronico"
-                        onChange={inputValidation}
-                        value={inputs.email}
-                      />
-                    </Form.Item>
-                </Col>
-                <Col span={12}>
+    }
+  };
+
+  return (
+    <div className="add-user-form">
+      <AddForm
+        userData={userData}
+        setUserData={setUserData}
+        addUser={addUser}
+      />
+    </div>
+  );
+}
+
+function AddForm(props) {
+  const { userData, setUserData, addUser } = props;
+  const { Option } = Select;
+
+  return (
+    <Form className="form-add" onSubmit={addUser}>
+      <Row gutter={24}>
+        <Col span={12}>
+          <Form.Item>
+            <Input
+              prefix={<Icon type="user" />}
+              placeholder="Nombre"
+              value={userData.name}
+              onChange={e => setUserData({ ...userData, name: e.target.value })}
+            />
+          </Form.Item>
+        </Col>
+        <Col span={12}>
+          <Form.Item>
+            <Input
+              prefix={<Icon type="user" />}
+              placeholder="Apellidos"
+              value={userData.lastname}
+              onChange={e =>
+                setUserData({ ...userData, lastname: e.target.value })
+              }
+            />
+          </Form.Item>
+        </Col>
+      </Row>
+
+      <Row gutter={24}>
+        <Col span={12}>
+          <Form.Item>
+            <Input
+              prefix={<Icon type="mail" />}
+              placeholder="Correo electronico"
+              value={userData.email}
+              onChange={e =>
+                setUserData({ ...userData, email: e.target.value })
+              }
+            />
+          </Form.Item>
+        </Col>
+        <Col span={12}>
           <Form.Item>
             <Select
-              placeholder="Selecciona un rol"
-              onChange={e => {setInputs({ ...inputs, role: e });console.log(e);}}
-              value={inputs.role}
+              placeholder="Selecióna un rol"
+              onChange={e => setUserData({ ...userData, role: e })}
+              value={userData.role}
             >
-              <Option value="">Selecciona un rol</Option>
               <Option value="admin">Administrador</Option>
               <Option value="editor">Editor</Option>
-              <Option value="reviewer">Revisor</Option>
+              <Option value="reviwer">Revisor</Option>
             </Select>
           </Form.Item>
         </Col>
-            </Row>
-            <Row gutter={24}>
-                <Col span={12}>
-                <Form.Item>
-            <Input
-              prefix={<LockOutlined />}
-              type="password"
-              name="password"
-              placeholder="Contraseña"
-              onChange={inputValidation}
-              value={inputs.password}
-            />
-          </Form.Item>
-                </Col>
-                <Col span={12}>
-                <Form.Item>
-            <Input
-              prefix={<LockOutlined />}
-              type="password"
-              name="repeatPassword"
-              placeholder="Repetir contraseña"
-              onChange={inputValidation}
-              value={inputs.repeatPassword}
-            />
-          </Form.Item>
-                </Col>
-            </Row>
-         
+      </Row>
 
-
+      <Row gutter={24}>
+        <Col span={12}>
           <Form.Item>
-            <Button type="primary" htmlType="submit" className="add-user__btn-submit">
-              Crear usuario
-            </Button>
+            <Input
+              prefix={<Icon type="lock" />}
+              type="password"
+              placeholder="Contraseña"
+              value={userData.password}
+              onChange={e =>
+                setUserData({ ...userData, password: e.target.value })
+              }
+            />
           </Form.Item>
-        </Form>
-      );
+        </Col>
+        <Col span={12}>
+          <Form.Item>
+            <Input
+              prefix={<Icon type="lock" />}
+              type="password"
+              placeholder="Repetir contraseña"
+              value={userData.repeatPassword}
+              onChange={e =>
+                setUserData({ ...userData, repeatPassword: e.target.value })
+              }
+            />
+          </Form.Item>
+        </Col>
+      </Row>
+
+      <Form.Item>
+        <Button type="primary" htmlType="submit" className="btn-submit">
+          Crear Usuario
+        </Button>
+      </Form.Item>
+    </Form>
+  );
 }

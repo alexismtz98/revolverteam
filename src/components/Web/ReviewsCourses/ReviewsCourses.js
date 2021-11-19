@@ -6,18 +6,16 @@ import "./ReviewsCourses.scss";
 
 export default function ReviewsCourses() {
   return (
-      <>
-    <Row>
-    <Col lg={4} />
-    <Col lg={16} className="reviews-courses__title">
-      <h2>
-        Forma parte de los +35 mil estudiantes que estan aprendiendo con mis
-        cursos
-      </h2>
-    </Col>
-    <Col lg={4} />
-  </Row>
     <Row className="reviews-courses">
+      <Row>
+        <Col lg={4} />
+        <Col lg={16} className="reviews-courses__title">
+          <h2>
+            Forma parte de los clientes que estan dando el siguiente paso en su negocio
+          </h2>
+        </Col>
+        <Col lg={4} />
+      </Row>
       <Row>
         <Col lg={4} />
         <Col lg={16}>
@@ -25,25 +23,25 @@ export default function ReviewsCourses() {
             <Col md={8}>
               <CardReview
                 name="Alonso Campos"
-                subtitle="Alumno de Udemy"
+                subtitle="Emprendedor"
                 avatar={AvatarPersona}
-                review="Un curso excelente, el profesor explica detalladamente como funciona react native y también como hacer componente por componente, he buscado muchos cursos de react native pero ninguno me ha enseñado tanto como este, ahora estoy desarrollando mi propia aplicación sin ningún tipo de problema gracias al curso."
+                review="Una plataforma excelente, he buscado en muchas paginas pero ninguna me ha enseñado tanto como esta, ahora estoy desarrollando mi propio plan sin ningún tipo de problema."
               />
             </Col>
             <Col md={8}>
               <CardReview
                 name="David Ramiro"
-                subtitle="Alumno de Udemy"
+                subtitle="Deseñador Grafico"
                 avatar={AvatarPersona}
-                review="Si te gustan los cursos que profundizan en la materia, te lo recomiendo. El profesor explica de forma completa todos los conceptos necesarios para trabajar con grid. Un gran curso."
+                review="Si te gustan los cursos que profundizan en la materia, te lo recomiendo y es muy sencillo contactar con otros profesionales."
               />
             </Col>
             <Col md={8}>
               <CardReview
                 name="Valentina Rubio"
-                subtitle="Alumna de Udemy"
+                subtitle="Agente de ventas"
                 avatar={AvatarPersona}
-                review="El contenido del curso es muy completo y de necesitar cualquier dato adicional el profesor está super pendiente para responderlo. Ya tengo creado mi E-commerce con WordPress y gran parte de la información necesaria la obtuve del curso."
+                review="El contenido de la plataforma es muy completo y de necesitar cualquier dato adicional el equipo de soporte tecnico está super pendiente para responderlo. Ya tengo creado mi E-commerce."
               />
             </Col>
           </Row>
@@ -51,15 +49,15 @@ export default function ReviewsCourses() {
             <Col md={8}>
               <CardReview
                 name="Marc Pérez"
-                subtitle="Alumno de Udemy"
+                subtitle="Musico Independiente"
                 avatar={AvatarPersona}
-                review="Empecé el curso sin saber nada de React Native y creo que lo finalizo teniendo un nivel de conocimiento como para embarcarme en realizar mi primera aplicación."
+                review="Empecé el curso sin saber nada de tecnologia y creo que ahora tengo un nivel de conocimiento como para embarcarme en realizar mi primera aplicación."
               />
             </Col>
             <Col md={8}>
               <CardReview
                 name="Jesús Cruz"
-                subtitle="Alumno de Udemy"
+                subtitle="Comerciante Online"
                 avatar={AvatarPersona}
                 review="Me ha parecido un buen curso, las explicaciones muy claras y lo que enseña me ha sido muy útil para la aplicación que me habían encargado."
               />
@@ -67,9 +65,9 @@ export default function ReviewsCourses() {
             <Col md={8}>
               <CardReview
                 name="Francisco Garcia"
-                subtitle="Alumna de Udemy"
+                subtitle="Desarrollador"
                 avatar={AvatarPersona}
-                review="Aprendes todo lo que promete el video de inicio y te da la capacidad para después crear tus propias apps. Gracias Agus por crear este curso, tenes mucho talento para explicar y se nota que te encanta hacerlo."
+                review="Aprendes todo lo que promete el video de inicio y te da la capacidad para después crear tus propias soluciones. Gracias por la ayuda."
               />
             </Col>
           </Row>
@@ -77,7 +75,6 @@ export default function ReviewsCourses() {
         <Col lg={4} />
       </Row>
     </Row>
-    </>
   );
 }
 
